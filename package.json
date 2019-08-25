@@ -31,5 +31,5 @@
     "not op_mini all"
   ],
   "keywords": [],
-  "description": "React TodoMVC with Laco state management and hooks"
+  "description": "React TodoMVC with react hooks and context api"
 }
