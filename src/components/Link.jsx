@@ -1,26 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { useStore } from "laco-react";
-import { TodoStore, setVisibilityFilter } from "../stores/todo";
+import { useTodo } from "../useTodo";
 
 const Link = ({ children, filter }) => {
-  const { visibilityFilter } = useStore(TodoStore);
+	const [{ visibilityFilter }, dispatch] = useTodo();
 
-  return (
-    <a
-      className={classnames({ selected: filter === visibilityFilter })}
-      style={{ cursor: "pointer" }}
-      onClick={() => setVisibilityFilter(filter)}
-    >
-      {children}
-    </a>
-  );
+	return (
+		<a
+			href="#"
+			type="button"
+			className={classnames({ selected: filter === visibilityFilter })}
+			style={{ cursor: "pointer" }}
+			onClick={() =>
+				dispatch({
+					type: "SET_VISIBILITY",
+					payload: {
+						visibilityFilter: filter
+					}
+				})
+			}
+		>
+			{children}
+		</a>
+	);
 };
 
 Link.propTypes = {
-  children: PropTypes.node.isRequired,
-  filter: PropTypes.string.isRequired
+	children: PropTypes.node.isRequired,
+	filter: PropTypes.string.isRequired
 };
 
 export default Link;

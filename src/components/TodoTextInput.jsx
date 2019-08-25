@@ -1,54 +1,58 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 
-export default class TodoTextInput extends Component {
-  static propTypes = {
-    onSave: PropTypes.func.isRequired,
-    text: PropTypes.string,
-    placeholder: PropTypes.string,
-    editing: PropTypes.bool,
-    newTodo: PropTypes.bool
-  }
+export const TodoTextInput = ({
+	todoText,
+	placeholder,
+	editing,
+	newTodo,
+	onSave
+}) => {
+	const [text, setText] = useState(todoText || "");
 
-  state = {
-    text: this.props.text || ''
-  }
+	const handleSubmit = e => {
+		const inputText = e.target.value.trim();
+		if (e.which === 13) {
+			onSave(inputText);
+			if (newTodo) {
+				setText("");
+			}
+		}
+	};
 
-  handleSubmit = e => {
-    const text = e.target.value.trim()
-    if (e.which === 13) {
-      this.props.onSave(text)
-      if (this.props.newTodo) {
-        this.setState({ text: '' })
-      }
-    }
-  }
+	const handleChange = e => {
+		setText(e.target.value);
+	};
 
-  handleChange = e => {
-    this.setState({ text: e.target.value })
-  }
+	const handleBlur = e => {
+		if (!newTodo) {
+			onSave(e.target.value);
+		}
+	};
 
-  handleBlur = e => {
-    if (!this.props.newTodo) {
-      this.props.onSave(e.target.value)
-    }
-  }
+	return (
+		<input
+			className={classnames({
+				edit: editing,
+				"new-todo": newTodo
+			})}
+			type="text"
+			placeholder={placeholder}
+			// eslint-disable-next-line jsx-a11y/no-autofocus
+			autoFocus
+			value={text}
+			onBlur={handleBlur}
+			onChange={handleChange}
+			onKeyDown={handleSubmit}
+		/>
+	);
+};
 
-  render() {
-    return (
-      <input className={
-        classnames({
-          edit: this.props.editing,
-          'new-todo': this.props.newTodo
-        })}
-        type="text"
-        placeholder={this.props.placeholder}
-        autoFocus="true"
-        value={this.state.text}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        onKeyDown={this.handleSubmit} />
-    )
-  }
-}
+TodoTextInput.propTypes = {
+	onSave: PropTypes.func.isRequired,
+	todoText: PropTypes.string,
+	placeholder: PropTypes.string,
+	editing: PropTypes.bool,
+	newTodo: PropTypes.bool
+};
