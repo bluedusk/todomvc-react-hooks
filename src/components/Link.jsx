@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { useTodo } from "../useTodo";
 
-const Link = ({ children, filter }) => {
+export const Link = ({ children, filter }) => {
 	const [{ visibilityFilter }, dispatch] = useTodo();
 
 	return (
@@ -30,5 +30,3 @@ Link.propTypes = {
 	children: PropTypes.node.isRequired,
 	filter: PropTypes.string.isRequired
 };
-
-export default Link;

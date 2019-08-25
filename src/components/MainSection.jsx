@@ -1,5 +1,5 @@
 import React from "react";
-import Footer from "./Footer";
+import { Footer } from "./Footer";
 import { TodoList } from "./TodoList";
 import { useTodo } from "../useTodo";
 

@@ -33,9 +33,7 @@ export const TodoItem = ({ todo }) => {
 			}
 		});
 
-	const handleDoubleClick = () => {
-		setEditing(true);
-	};
+	const handleDoubleClick = () => setEditing(true);
 
 	const handleSave = (id, text) => {
 		if (text.length === 0) {
@@ -46,34 +44,6 @@ export const TodoItem = ({ todo }) => {
 		setEditing(false);
 	};
 
-	let element;
-	if (editing) {
-		element = (
-			<TodoTextInput
-				text={todo.text}
-				editing={editing}
-				onSave={text => handleSave(todo.id, text)}
-			/>
-		);
-	} else {
-		element = (
-			<div className="view">
-				<input
-					className="toggle"
-					type="checkbox"
-					checked={todo.completed}
-					onChange={() => completeTodo(todo.id)}
-				/>
-				<label onDoubleClick={handleDoubleClick}>{todo.text}</label>
-				<button
-					type="button"
-					className="destroy"
-					onClick={() => deleteTodo(todo.id)}
-				/>
-			</div>
-		);
-	}
-
 	return (
 		<li
 			className={classnames({
@@ -81,7 +51,28 @@ export const TodoItem = ({ todo }) => {
 				editing
 			})}
 		>
-			{element}
+			{editing ? (
+				<TodoTextInput
+					text={todo.text}
+					editing={editing}
+					onSave={text => handleSave(todo.id, text)}
+				/>
+			) : (
+				<div className="view">
+					<input
+						className="toggle"
+						type="checkbox"
+						checked={todo.completed}
+						onChange={() => completeTodo(todo.id)}
+					/>
+					<label onDoubleClick={handleDoubleClick}>{todo.text}</label>
+					<button
+						type="button"
+						className="destroy"
+						onClick={() => deleteTodo(todo.id)}
+					/>
+				</div>
+			)}
 		</li>
 	);
 };
