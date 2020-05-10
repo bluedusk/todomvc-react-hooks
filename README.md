@@ -4,8 +4,12 @@ React Hooks todomvc demo with context api. Instead of using Redux this demo use 
 
 # Run
 
+## client
+
 ```
 npm install
 
 npm start
 ```
+
+## server
