@@ -13,24 +13,24 @@ export const TodoItem = ({ todo }) => {
 			type: "EDIT_TODO",
 			payload: {
 				id,
-				text
-			}
+				text,
+			},
 		});
 	const deleteTodo = (id, text) =>
 		dispatch({
 			type: "DELETE_TODO",
 			payload: {
 				id,
-				text
-			}
+				text,
+			},
 		});
 	const completeTodo = (id, text) =>
 		dispatch({
 			type: "COMPLETE_TODO",
 			payload: {
 				id,
-				text
-			}
+				text,
+			},
 		});
 
 	const handleDoubleClick = () => setEditing(true);
@@ -48,14 +48,14 @@ export const TodoItem = ({ todo }) => {
 		<li
 			className={classnames({
 				completed: todo.completed,
-				editing
+				editing,
 			})}
 		>
 			{editing ? (
 				<TodoTextInput
 					text={todo.text}
 					editing={editing}
-					onSave={text => handleSave(todo.id, text)}
+					onSave={(text) => handleSave(todo.id, text)}
 				/>
 			) : (
 				<div className="view">

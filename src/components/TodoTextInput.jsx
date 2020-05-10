@@ -7,11 +7,11 @@ export const TodoTextInput = ({
 	placeholder,
 	editing,
 	newTodo,
-	onSave
+	onSave,
 }) => {
 	const [text, setText] = useState(todoText || "");
 
-	const handleSubmit = e => {
+	const handleSubmit = (e) => {
 		const inputText = e.target.value.trim();
 		if (e.which === 13) {
 			onSave(inputText);
@@ -21,11 +21,11 @@ export const TodoTextInput = ({
 		}
 	};
 
-	const handleChange = e => {
+	const handleChange = (e) => {
 		setText(e.target.value);
 	};
 
-	const handleBlur = e => {
+	const handleBlur = (e) => {
 		if (!newTodo) {
 			onSave(e.target.value);
 		}
@@ -35,7 +35,7 @@ export const TodoTextInput = ({
 		<input
 			className={classnames({
 				edit: editing,
-				"new-todo": newTodo
+				"new-todo": newTodo,
 			})}
 			type="text"
 			placeholder={placeholder}
@@ -54,5 +54,5 @@ TodoTextInput.propTypes = {
 	todoText: PropTypes.string,
 	placeholder: PropTypes.string,
 	editing: PropTypes.bool,
-	newTodo: PropTypes.bool
+	newTodo: PropTypes.bool,
 };

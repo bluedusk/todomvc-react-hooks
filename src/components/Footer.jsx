@@ -11,7 +11,7 @@ export const Footer = ({ activeCount, completedCount, onClearCompleted }) => (
 			{activeCount === 1 ? "item" : "items"} left
 		</span>
 		<ul className="filters">
-			{FILTER_TITLES.map(filter => (
+			{FILTER_TITLES.map((filter) => (
 				<li key={filter}>
 					<FilterLink filter={filter}>{filter}</FilterLink>
 				</li>
@@ -32,5 +32,5 @@ export const Footer = ({ activeCount, completedCount, onClearCompleted }) => (
 Footer.propTypes = {
 	completedCount: PropTypes.number.isRequired,
 	activeCount: PropTypes.number.isRequired,
-	onClearCompleted: PropTypes.func.isRequired
+	onClearCompleted: PropTypes.func.isRequired,
 };

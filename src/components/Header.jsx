@@ -10,11 +10,11 @@ const Header = () => {
 			<h1>todos</h1>
 			<TodoTextInput
 				newTodo
-				onSave={text => {
+				onSave={(text) => {
 					if (text.length !== 0) {
 						dispatch({
 							type: "ADD_TODO",
-							payload: { text }
+							payload: { text },
 						});
 					}
 				}}

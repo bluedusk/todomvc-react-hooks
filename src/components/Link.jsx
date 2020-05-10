@@ -16,8 +16,8 @@ export const Link = ({ children, filter }) => {
 				dispatch({
 					type: "SET_VISIBILITY",
 					payload: {
-						visibilityFilter: filter
-					}
+						visibilityFilter: filter,
+					},
 				})
 			}
 		>
@@ -28,5 +28,5 @@ export const Link = ({ children, filter }) => {
 
 Link.propTypes = {
 	children: PropTypes.node.isRequired,
-	filter: PropTypes.string.isRequired
+	filter: PropTypes.string.isRequired,
 };

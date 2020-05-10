@@ -6,56 +6,54 @@ export const reducer = (state, action) => {
 			return {
 				todos: [
 					{
-						id: Math.random()
-							.toString(16)
-							.substring(2),
+						id: Math.random().toString(16).substring(2),
 						completed: false,
-						text
+						text,
 					},
-					...todos
+					...todos,
 				],
-				visibilityFilter
+				visibilityFilter,
 			};
 		case "DELETE_TODO":
 			return {
-				todos: todos.filter(todo => todo.id !== id),
-				visibilityFilter
+				todos: todos.filter((todo) => todo.id !== id),
+				visibilityFilter,
 			};
 		case "EDIT_TODO":
 			return {
-				todos: todos.map(todo => (todo.id === id ? { ...todo, text } : todo)),
-				visibilityFilter
+				todos: todos.map((todo) => (todo.id === id ? { ...todo, text } : todo)),
+				visibilityFilter,
 			};
 		case "COMPLETE_TODO":
 			return {
-				todos: todos.map(todo =>
+				todos: todos.map((todo) =>
 					todo.id === id ? { ...todo, completed: !todo.completed } : todo
 				),
-				visibilityFilter
+				visibilityFilter,
 			};
 		case "COMPLETE_ALL": {
-			const areAllMarked = todos.every(todo => todo.completed);
+			const areAllMarked = todos.every((todo) => todo.completed);
 			const result = {
-				todos: todos.map(todo => ({ ...todo, completed: !areAllMarked })),
-				visibilityFilter
+				todos: todos.map((todo) => ({ ...todo, completed: !areAllMarked })),
+				visibilityFilter,
 			};
 			console.log(result);
 			return result;
 		}
 		case "CLEAR_COMPLETED":
 			return {
-				todos: todos.filter(t => t.completed === false),
-				visibilityFilter
+				todos: todos.filter((t) => t.completed === false),
+				visibilityFilter,
 			};
 		case "CLEAR_ALL":
 			return {
 				todos: [],
-				visibilityFilter
+				visibilityFilter,
 			};
 		case "SET_VISIBILITY":
 			return {
 				todos: [...todos],
-				visibilityFilter: action.payload.visibilityFilter
+				visibilityFilter: action.payload.visibilityFilter,
 			};
 
 		default:

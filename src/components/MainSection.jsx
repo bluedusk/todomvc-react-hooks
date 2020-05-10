@@ -1,9 +1,10 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from "react";
 import { Footer } from "./Footer";
 import { TodoList } from "./TodoList";
 import { useTodo } from "../useTodo";
 
-const getCompletedCount = todos =>
+const getCompletedCount = (todos) =>
 	todos.reduce((count, todo) => (todo.completed ? count + 1 : count), 0);
 
 const MainSection = () => {
@@ -22,7 +23,7 @@ const MainSection = () => {
 					<label
 						onClick={() =>
 							dispatch({
-								type: "COMPLETE_ALL"
+								type: "COMPLETE_ALL",
 							})
 						}
 					/>
@@ -35,7 +36,7 @@ const MainSection = () => {
 					activeCount={todosCount - completedCount}
 					onClearCompleted={() => {
 						dispatch({
-							type: "CLEAR_COMPLETED"
+							type: "CLEAR_COMPLETED",
 						});
 					}}
 				/>

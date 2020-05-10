@@ -9,15 +9,15 @@ const initialState = {
 		{
 			text: "React Hooks",
 			completed: false,
-			id: 0
+			id: 0,
 		},
 		{
 			text: "Context",
 			completed: true,
-			id: 1
-		}
+			id: 1,
+		},
 	],
-	visibilityFilter: "All"
+	visibilityFilter: "All",
 };
 const App = () => (
 	<TodoProvider initialState={initialState} reducer={reducer}>
