@@ -3,17 +3,17 @@ import { gql } from "apollo-server-express";
 export const typeDefs = gql`
   type Query {
     hello: String!
-    author: Author!
-    book: Book!
+    todos: [TODO!]!
   }
-  type Author {
-    name: String!
-    age: Int!
-    books: [Book!]
+  type TODO {
+    id: ID!
+    text: String!
+    completed: Boolean!
   }
-  type Book {
-    name: String!
-    price: Int!
-    author: Author!
+  type Mutation {
+    updateTodo(id: ID!): TODO!
+  }
+  type Subscription {
+    todosUpdated: [TODO!]!
   }
 `;

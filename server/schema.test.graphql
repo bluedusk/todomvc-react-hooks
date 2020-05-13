@@ -1,25 +1,23 @@
-# Write your query or mutation here
-
-```
-# Write your query or mutation here
-query hello{
-  hello
-}
-
-query author{
-  author{
-    name
-    age
+query todos {
+  todos {
+    id
+    text
+    completed
   }
 }
 
-query book{
-  book{
-    name
-    author{
-      name
-    }
+mutation updateTodo {
+  updateTodo(id: "1") {
+    id
+    text
+    completed
   }
 }
 
-```
+subscription sub_todos {
+  todosUpdated {
+    id
+    text
+    completed
+  }
+}
