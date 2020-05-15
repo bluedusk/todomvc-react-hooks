@@ -6,6 +6,13 @@ query todos {
   }
 }
 
+mutation addTodo {
+  addTodo(text: "another todo") {
+    id
+    text
+    completed
+  }
+}
 mutation updateTodo {
   updateTodo(id: "1") {
     id

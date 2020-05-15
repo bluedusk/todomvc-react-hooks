@@ -12,9 +12,15 @@ export const resolvers = {
     },
   },
   Mutation: {
+    addTodo: (parent, { text }, { Todos }) => {
+      const result = Todos.addTodo(text);
+      pubsub.publish(TODO_ADDED, { todosUpdated: Todos.getTodos() });
+      return result;
+    },
     updateTodo: (parent, { id }, { Todos }) => {
+      const result = Todos.updateTodoById(id);
       pubsub.publish(TODO_UPDATED, { todosUpdated: Todos.getTodos() });
-      return Todos.updateTodoById(id);
+      return result;
     },
   },
   Subscription: {

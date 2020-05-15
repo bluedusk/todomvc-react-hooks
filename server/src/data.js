@@ -23,6 +23,16 @@ export class Todos {
     this.todos = todos;
   }
 
+  addTodo(todoText) {
+    const todo = {
+      id: String(this.getTodos().length + 1),
+      text: todoText,
+      completed: false,
+    };
+    this.todos.push(todo);
+    return todo;
+  }
+
   updateTodoById(id) {
     let result;
     this.todos.forEach((todo) => {

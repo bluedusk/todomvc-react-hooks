@@ -11,6 +11,7 @@ export const typeDefs = gql`
     completed: Boolean!
   }
   type Mutation {
+    addTodo(text: String!): TODO!
     updateTodo(id: ID!): TODO!
   }
   type Subscription {
