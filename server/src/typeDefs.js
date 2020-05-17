@@ -13,8 +13,9 @@ export const typeDefs = gql`
   type Mutation {
     addTodo(text: String!): TODO!
     updateTodo(id: ID!): TODO!
+    deleteTodo(id: ID!): TODO
   }
   type Subscription {
-    todosUpdated: [TODO!]!
+    todos: [TODO!]!
   }
 `;

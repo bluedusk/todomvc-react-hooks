@@ -3,6 +3,7 @@ import { PubSub } from "apollo-server-express";
 const pubsub = new PubSub();
 const TODO_ADDED = "TODO_ADDED";
 const TODO_UPDATED = "TODO_UPDATED";
+const TODO_DELETED = "TODO_DELETED";
 
 export const resolvers = {
   Query: {
@@ -14,19 +15,24 @@ export const resolvers = {
   Mutation: {
     addTodo: (parent, { text }, { Todos }) => {
       const result = Todos.addTodo(text);
-      pubsub.publish(TODO_ADDED, { todosUpdated: Todos.getTodos() });
+      pubsub.publish(TODO_ADDED, { todos: Todos.getTodos() });
+      return result;
+    },
+    deleteTodo: (parent, { id }, { Todos }) => {
+      const result = Todos.deleteTodo(id);
+      pubsub.publish(TODO_DELETED, { todos: Todos.getTodos() });
       return result;
     },
     updateTodo: (parent, { id }, { Todos }) => {
       const result = Todos.updateTodoById(id);
-      pubsub.publish(TODO_UPDATED, { todosUpdated: Todos.getTodos() });
+      pubsub.publish(TODO_UPDATED, { todos: Todos.getTodos() });
       return result;
     },
   },
   Subscription: {
-    todosUpdated: {
+    todos: {
       subscribe: () => {
-        return pubsub.asyncIterator([TODO_ADDED, TODO_UPDATED]);
+        return pubsub.asyncIterator([TODO_ADDED, TODO_UPDATED, TODO_DELETED]);
       },
     },
   },

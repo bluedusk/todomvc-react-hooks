@@ -33,6 +33,14 @@ export class Todos {
     return todo;
   }
 
+  deleteTodo(id) {
+    const todo = this.todos.find((todo) => todo.id === id);
+    if (todo) {
+      this.todos = this.todos.filter((todo) => todo.id !== id);
+    }
+    return todo;
+  }
+
   updateTodoById(id) {
     let result;
     this.todos.forEach((todo) => {

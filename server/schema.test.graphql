@@ -21,8 +21,16 @@ mutation updateTodo {
   }
 }
 
+mutation deleteTodo {
+  deleteTodo(id: "1") {
+    id
+    text
+    completed
+  }
+}
+
 subscription sub_todos {
-  todosUpdated {
+  todos {
     id
     text
     completed
