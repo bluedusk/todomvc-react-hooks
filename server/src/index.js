@@ -21,8 +21,10 @@ const server = new ApolloServer({
   plugins: [
     {
       requestDidStart(requestContext) {
-        console.dir(
-          "Graphql operationName: " + requestContext.request.operationName
+        console.log(
+          `[${new Date().toISOString()}] - Graphql operationName:  ${
+            requestContext.request.operationName
+          }`
         );
       },
     },
