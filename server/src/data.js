@@ -41,11 +41,16 @@ export class Todos {
     return todo;
   }
 
-  updateTodoById(id) {
+  updateTodoById(id, text) {
     let result;
     this.todos.forEach((todo) => {
       if (todo.id === id) {
-        todo.completed = !todo.completed;
+        // update text or completed
+        if (text) {
+          todo.text = text;
+        } else {
+          todo.completed = !todo.completed;
+        }
         result = todo;
       }
     });

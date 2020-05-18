@@ -3,7 +3,6 @@ import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs";
 import express from "express";
 import { Todos } from "./data";
-import { SubscriptionServer } from "subscriptions-transport-ws";
 import { createServer } from "http";
 
 const app = express();
@@ -19,6 +18,15 @@ const server = new ApolloServer({
   context: {
     Todos: new Todos(),
   },
+  plugins: [
+    {
+      requestDidStart(requestContext) {
+        console.dir(
+          "Graphql operationName: " + requestContext.request.operationName
+        );
+      },
+    },
+  ],
   formatError: (err) => {
     console.log(err);
   },

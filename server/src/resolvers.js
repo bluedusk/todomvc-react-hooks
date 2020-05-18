@@ -23,8 +23,8 @@ export const resolvers = {
       pubsub.publish(TODO_DELETED, { todos: Todos.getTodos() });
       return result;
     },
-    updateTodo: (parent, { id }, { Todos }) => {
-      const result = Todos.updateTodoById(id);
+    updateTodo: (parent, { id, text }, { Todos }) => {
+      const result = Todos.updateTodoById(id, text);
       pubsub.publish(TODO_UPDATED, { todos: Todos.getTodos() });
       return result;
     },
