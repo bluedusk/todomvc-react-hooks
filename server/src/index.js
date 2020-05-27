@@ -15,6 +15,7 @@ const server = new ApolloServer({
   // Don't mock fields that already have resolvers
   mockEntireSchema: false,
   // context is an object not a function so it will not be triggered for each request which is what we want
+  // If for each request we want new context, we can use context: ()=> { /***/}
   context: {
     Todos: new Todos(),
   },

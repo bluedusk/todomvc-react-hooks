@@ -57,4 +57,15 @@ export class Todos {
 
     return result;
   }
+  deleteAll() {
+    this.todos = [];
+  }
+  completeAll() {
+    this.todos = [...this.todos].map((todo) => {
+      return {
+        ...todo,
+        completed: true,
+      };
+    });
+  }
 }

@@ -29,6 +29,14 @@ mutation deleteTodo {
   }
 }
 
+mutation completeAll {
+  completeAll
+}
+
+mutation deleteAll {
+  deleteAll
+}
+
 subscription sub_todos {
   todos {
     id

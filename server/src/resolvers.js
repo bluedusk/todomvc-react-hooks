@@ -1,9 +1,11 @@
 import { PubSub } from "apollo-server-express";
 
 const pubsub = new PubSub();
-const TODO_ADDED = "TODO_ADDED";
-const TODO_UPDATED = "TODO_UPDATED";
-const TODO_DELETED = "TODO_DELETED";
+const TODO_CHANGED = "TODO_CHANGED";
+
+const doPublish = (todos) => {
+  pubsub.publish(TODO_CHANGED, { todos });
+};
 
 export const resolvers = {
   Query: {
@@ -15,24 +17,34 @@ export const resolvers = {
   Mutation: {
     addTodo: (parent, { text }, { Todos }) => {
       const result = Todos.addTodo(text);
-      pubsub.publish(TODO_ADDED, { todos: Todos.getTodos() });
+      doPublish(Todos.getTodos());
       return result;
     },
     deleteTodo: (parent, { id }, { Todos }) => {
       const result = Todos.deleteTodo(id);
-      pubsub.publish(TODO_DELETED, { todos: Todos.getTodos() });
+      doPublish(Todos.getTodos());
       return result;
     },
     updateTodo: (parent, { id, text }, { Todos }) => {
       const result = Todos.updateTodoById(id, text);
-      pubsub.publish(TODO_UPDATED, { todos: Todos.getTodos() });
+      doPublish(Todos.getTodos());
       return result;
+    },
+    deleteAll: (_, __, { Todos }) => {
+      Todos.deleteAll();
+      doPublish(Todos.getTodos());
+      return true;
+    },
+    completeAll: (_, __, { Todos }) => {
+      Todos.completeAll();
+      doPublish(Todos.getTodos());
+      return true;
     },
   },
   Subscription: {
     todos: {
       subscribe: () => {
-        return pubsub.asyncIterator([TODO_ADDED, TODO_UPDATED, TODO_DELETED]);
+        return pubsub.asyncIterator([TODO_CHANGED]);
       },
     },
   },
