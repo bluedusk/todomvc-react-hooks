@@ -5,7 +5,7 @@ import { getFilteredTodos } from "../stores/util";
 export const TodoList = ({ todos, visibilityFilter }) => (
 	<ul className="todo-list">
 		{getFilteredTodos(todos, visibilityFilter).map((todo) => (
-			<TodoItem key={todo.id} todo={todo} />
+			<TodoItem key={todo.id + todo.text} todo={todo} />
 		))}
 	</ul>
 );

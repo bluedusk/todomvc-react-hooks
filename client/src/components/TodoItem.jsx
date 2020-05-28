@@ -1,37 +1,43 @@
 import React, { useState } from "react";
 import classnames from "classnames";
+import { gql, useMutation } from "@apollo/client";
 import { TodoTextInput } from "./TodoTextInput";
-import { useTodo } from "../useTodo";
+
+const DELETE_TODO = gql`
+	mutation deleteTodoMutation($id: ID!) {
+		deleteTodo(id: $id) {
+			id
+			text
+			completed
+		}
+	}
+`;
+const UPDATE_TODO = gql`
+	mutation updateTodoMutation($id: ID!, $text: String) {
+		updateTodo(id: $id, text: $text) {
+			id
+			text
+			completed
+		}
+	}
+`;
 
 export const TodoItem = ({ todo }) => {
 	const [editing, setEditing] = useState(false);
+	const [deleteTodoMutation] = useMutation(DELETE_TODO);
+	const [updateTodoMutation] = useMutation(UPDATE_TODO);
 
-	const dispatch = useTodo()[1];
+	const editTodo = async (id, text) => {
+		await updateTodoMutation({ variables: { id, text } });
+	};
 
-	const editTodo = (id, text) =>
-		dispatch({
-			type: "EDIT_TODO",
-			payload: {
-				id,
-				text,
-			},
-		});
-	const deleteTodo = (id, text) =>
-		dispatch({
-			type: "DELETE_TODO",
-			payload: {
-				id,
-				text,
-			},
-		});
-	const completeTodo = (id, text) =>
-		dispatch({
-			type: "COMPLETE_TODO",
-			payload: {
-				id,
-				text,
-			},
-		});
+	const deleteTodo = async (id) => {
+		await deleteTodoMutation({ variables: { id } });
+	};
+
+	const completeTodo = async (id) => {
+		await updateTodoMutation({ variables: { id } });
+	};
 
 	const handleDoubleClick = () => setEditing(true);
 
@@ -53,7 +59,7 @@ export const TodoItem = ({ todo }) => {
 		>
 			{editing ? (
 				<TodoTextInput
-					text={todo.text}
+					todoText={todo.text}
 					editing={editing}
 					onSave={(text) => handleSave(todo.id, text)}
 				/>

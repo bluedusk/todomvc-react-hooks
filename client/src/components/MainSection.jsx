@@ -1,14 +1,73 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from "react";
+import { gql, useQuery, useMutation } from "@apollo/client";
+import React, { useState, useEffect } from "react";
 import { Footer } from "./Footer";
 import { TodoList } from "./TodoList";
-import { useTodo } from "../useTodo";
+
+const GET_ALL_TODOS = gql`
+	query getAllTodos {
+		todos {
+			id
+			text
+			completed
+		}
+	}
+`;
+const COMPLETE_ALL = gql`
+	mutation completeAll {
+		completeAll
+	}
+`;
+const DELETE_ALL = gql`
+	mutation deleteAll {
+		deleteAll
+	}
+`;
 
 const getCompletedCount = (todos) =>
 	todos.reduce((count, todo) => (todo.completed ? count + 1 : count), 0);
 
 const MainSection = () => {
-	const [{ todos, visibilityFilter }, dispatch] = useTodo();
+	const [completeAll] = useMutation(COMPLETE_ALL);
+	const [deleteAll] = useMutation(DELETE_ALL);
+
+	const [visibilityFilter, setVisibilityFilter] = useState("All");
+
+	const { loading, error, data, startPolling, stopPolling } = useQuery(
+		GET_ALL_TODOS
+	);
+	useEffect(() => {
+		window.addEventListener("load", () => {
+			console.log("Start Polling...");
+			startPolling(2000);
+		});
+		window.addEventListener("focus", () => {
+			console.log("Start Polling...");
+			startPolling(2000);
+		});
+		window.addEventListener("blur", () => {
+			console.log("Stop Polling...");
+			stopPolling();
+		});
+
+		return () => {
+			window.removeEventListener("load");
+			window.removeEventListener("focus");
+			window.removeEventListener("blur");
+		};
+	}, []);
+
+	if (loading) {
+		return null;
+	}
+
+	if (error) {
+		console.log(error);
+	}
+
+	console.log(data.todos);
+
+	const { todos } = data;
 	const todosCount = todos.length;
 	const completedCount = getCompletedCount(todos);
 	return (
@@ -21,11 +80,9 @@ const MainSection = () => {
 						defaultChecked={completedCount === todosCount}
 					/>
 					<label
-						onClick={() =>
-							dispatch({
-								type: "COMPLETE_ALL",
-							})
-						}
+						onClick={() => {
+							completeAll();
+						}}
 					/>
 				</span>
 			)}
@@ -35,9 +92,7 @@ const MainSection = () => {
 					completedCount={completedCount}
 					activeCount={todosCount - completedCount}
 					onClearCompleted={() => {
-						dispatch({
-							type: "CLEAR_COMPLETED",
-						});
+						deleteAll();
 					}}
 				/>
 			)}

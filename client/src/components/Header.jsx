@@ -1,10 +1,20 @@
 import React from "react";
+import { gql, useMutation } from "@apollo/client";
 import { TodoTextInput } from "./TodoTextInput";
-import { useTodo } from "../useTodo";
 
+const ADD_TODO = gql`
+	mutation addTodoMutation($text: String!) {
+		addTodo(text: $text) {
+			id
+			text
+			completed
+		}
+	}
+`;
 const Header = () => {
-	const dispatch = useTodo()[1];
+	// const dispatch = useTodo()[1];
 
+	const [addTodoMutation] = useMutation(ADD_TODO);
 	return (
 		<header className="header">
 			<h1>todos</h1>
@@ -12,10 +22,7 @@ const Header = () => {
 				newTodo
 				onSave={(text) => {
 					if (text.length !== 0) {
-						dispatch({
-							type: "ADD_TODO",
-							payload: { text },
-						});
+						addTodoMutation({ variables: { text } });
 					}
 				}}
 				placeholder="What needs to be done?"
