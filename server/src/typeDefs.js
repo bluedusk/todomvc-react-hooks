@@ -15,7 +15,7 @@ export const typeDefs = gql`
     updateTodo(id: ID!, text: String): TODO!
     deleteTodo(id: ID!): TODO
     completeAll: Boolean
-    deleteAll: Boolean
+    deleteCompleted: Boolean
   }
   type Subscription {
     todos: [TODO!]!

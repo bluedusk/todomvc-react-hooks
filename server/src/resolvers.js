@@ -30,8 +30,8 @@ export const resolvers = {
       doPublish(Todos.getTodos());
       return result;
     },
-    deleteAll: (_, __, { Todos }) => {
-      Todos.deleteAll();
+    deleteCompleted: (_, __, { Todos }) => {
+      Todos.deleteCompleted();
       doPublish(Todos.getTodos());
       return true;
     },

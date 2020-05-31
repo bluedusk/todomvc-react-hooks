@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { gql, useQuery, useMutation } from "@apollo/client";
-import React, { useState, useEffect } from "react";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import React, { useEffect, useCallback } from "react";
 import { Footer } from "./Footer";
 import { TodoList } from "./TodoList";
 
@@ -18,9 +18,9 @@ const COMPLETE_ALL = gql`
 		completeAll
 	}
 `;
-const DELETE_ALL = gql`
-	mutation deleteAll {
-		deleteAll
+const DELETE_COMPLETED = gql`
+	mutation deleteCompleted {
+		deleteCompleted
 	}
 `;
 
@@ -35,28 +35,29 @@ const getCompletedCount = (todos) =>
 
 const MainSection = () => {
 	const [completeAll] = useMutation(COMPLETE_ALL);
-	const [deleteAll] = useMutation(DELETE_ALL);
+	const [deleteAll] = useMutation(DELETE_COMPLETED);
 	const { data: visibilityData, client } = useQuery(GET_VISIBILITY_FILTER);
-
-	console.log("--------------------------", visibilityData);
 
 	const { loading, error, data, startPolling, stopPolling } = useQuery(
 		GET_ALL_TODOS
 	);
 
-	const setVisibility = (filter) =>
-		client.writeQuery({
-			query: gql`
-				query GetVisibilityFilter {
-					visibilityFilter
-				}
-			`,
-			data: { visibilityFilter: filter },
-		});
+	const setVisibility = useCallback(
+		(filter) =>
+			client.writeQuery({
+				query: gql`
+					query GetVisibilityFilter {
+						visibilityFilter
+					}
+				`,
+				data: { visibilityFilter: filter },
+			}),
+		[client]
+	);
 
 	useEffect(() => {
 		setVisibility("All");
-	}, []);
+	}, [setVisibility]);
 
 	useEffect(() => {
 		window.addEventListener("load", () => {
@@ -77,7 +78,7 @@ const MainSection = () => {
 			window.removeEventListener("focus");
 			window.removeEventListener("blur");
 		};
-	}, []);
+	}, [startPolling, stopPolling]);
 
 	if (loading) {
 		return null;
@@ -101,11 +102,7 @@ const MainSection = () => {
 						type="checkbox"
 						defaultChecked={completedCount === todosCount}
 					/>
-					<label
-						onClick={() => {
-							completeAll();
-						}}
-					/>
+					<label onClick={() => completeAll()} />
 				</span>
 			)}
 			<TodoList

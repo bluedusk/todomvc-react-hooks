@@ -60,6 +60,9 @@ export class Todos {
   deleteAll() {
     this.todos = [];
   }
+  deleteCompleted() {
+    this.todos = [...this.todos].filter(({ completed }) => !completed);
+  }
   completeAll() {
     this.todos = [...this.todos].map((todo) => {
       return {
