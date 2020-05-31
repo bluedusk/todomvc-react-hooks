@@ -4,7 +4,12 @@ import { Link as FilterLink } from "./Link";
 
 const FILTER_TITLES = ["All", "Active", "Completed"];
 
-export const Footer = ({ activeCount, completedCount, onClearCompleted }) => (
+export const Footer = ({
+	activeCount,
+	completedCount,
+	onClearCompleted,
+	setFilter,
+}) => (
 	<footer className="footer">
 		<span className="todo-count">
 			<strong>{activeCount || "No"}</strong>{" "}
@@ -13,7 +18,9 @@ export const Footer = ({ activeCount, completedCount, onClearCompleted }) => (
 		<ul className="filters">
 			{FILTER_TITLES.map((filter) => (
 				<li key={filter}>
-					<FilterLink filter={filter}>{filter}</FilterLink>
+					<FilterLink filter={filter} setFilter={setFilter}>
+						{filter}
+					</FilterLink>
 				</li>
 			))}
 		</ul>

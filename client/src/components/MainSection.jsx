@@ -24,18 +24,40 @@ const DELETE_ALL = gql`
 	}
 `;
 
+const GET_VISIBILITY_FILTER = gql`
+	query GetVisibilityFilter {
+		visibilityFilter @client
+	}
+`;
+
 const getCompletedCount = (todos) =>
 	todos.reduce((count, todo) => (todo.completed ? count + 1 : count), 0);
 
 const MainSection = () => {
 	const [completeAll] = useMutation(COMPLETE_ALL);
 	const [deleteAll] = useMutation(DELETE_ALL);
+	const { data: visibilityData, client } = useQuery(GET_VISIBILITY_FILTER);
 
-	const [visibilityFilter, setVisibilityFilter] = useState("All");
+	console.log("--------------------------", visibilityData);
 
 	const { loading, error, data, startPolling, stopPolling } = useQuery(
 		GET_ALL_TODOS
 	);
+
+	const setVisibility = (filter) =>
+		client.writeQuery({
+			query: gql`
+				query GetVisibilityFilter {
+					visibilityFilter
+				}
+			`,
+			data: { visibilityFilter: filter },
+		});
+
+	useEffect(() => {
+		setVisibility("All");
+	}, []);
+
 	useEffect(() => {
 		window.addEventListener("load", () => {
 			console.log("Start Polling...");
@@ -86,14 +108,16 @@ const MainSection = () => {
 					/>
 				</span>
 			)}
-			<TodoList todos={todos} visibilityFilter={visibilityFilter} />
+			<TodoList
+				todos={todos}
+				visibilityFilter={visibilityData.visibilityFilter}
+			/>
 			{!!todosCount && (
 				<Footer
+					setFilter={setVisibility}
 					completedCount={completedCount}
 					activeCount={todosCount - completedCount}
-					onClearCompleted={() => {
-						deleteAll();
-					}}
+					onClearCompleted={() => deleteAll()}
 				/>
 			)}
 		</section>
