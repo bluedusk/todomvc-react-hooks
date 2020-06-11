@@ -1,6 +1,5 @@
 export class Todos {
   constructor() {
-    console.log("-------> new Todos");
     this.todos = [
       {
         id: "0",

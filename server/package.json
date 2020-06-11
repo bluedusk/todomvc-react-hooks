@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js"
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "jest --passWithNoTests"
   },
   "keywords": [],
   "author": "",
@@ -13,13 +14,20 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.9.6",
+    "@types/jest": "^26.0.0",
+    "eslint": "^7.2.0",
+    "eslint-plugin-graphql": "^4.0.0",
+    "eslint-plugin-jest": "^23.13.2",
     "nodemon": "^2.0.3"
   },
   "dependencies": {
     "apollo-server-express": "^2.13.0",
+    "apollo-server-testing": "^2.14.3",
     "express": "^4.17.1",
     "graphql": "^15.0.0",
+    "jest": "^26.0.1",
     "subscriptions-transport-ws": "^0.9.16"
   }
 }
