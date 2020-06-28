@@ -18,9 +18,7 @@ export const Footer = ({
 		<ul className="filters">
 			{FILTER_TITLES.map((filter) => (
 				<li key={filter}>
-					<FilterLink filter={filter} setFilter={setFilter}>
-						{filter}
-					</FilterLink>
+					<FilterLink filter={filter} setFilter={setFilter} />
 				</li>
 			))}
 		</ul>
