@@ -1,6 +1,6 @@
 import { resolvers } from "./resolvers";
 
-describe("[Query.todos]", () => {
+describe("[Query]", () => {
   const mockContext = {
     Todos: { getTodos: jest.fn() },
   };
@@ -28,3 +28,28 @@ describe("[Query.todos]", () => {
     ]);
   });
 });
+describe("[Mutation]", () => {
+  const mockContext = {
+    Todos: { addTodo: jest.fn(), getTodos: jest.fn() },
+  };
+  const { addTodo } = mockContext.Todos;
+
+  it("calls addTodos from todo api", async () => {
+    // NOTE: these results get reversed in the resolver
+    addTodo.mockReturnValueOnce({
+      id: "9",
+      text: "new todo",
+      completed: false,
+    });
+
+    // check the resolver response
+    const res = await resolvers.Mutation.addTodo(null, {}, mockContext);
+    expect(res).toEqual({
+      id: "9",
+      text: "new todo",
+      completed: false,
+    });
+  });
+});
+
+describe("[Subscription]", () => {});
