@@ -57,9 +57,9 @@ const MainSection = () => {
 		});
 
 		return () => {
-			window.removeEventListener("load");
-			window.removeEventListener("focus");
-			window.removeEventListener("blur");
+			window.removeEventListener("load", undefined);
+			window.removeEventListener("focus", undefined);
+			window.removeEventListener("blur", undefined);
 		};
 	}, [startPolling, stopPolling]);
 

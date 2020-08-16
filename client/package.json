@@ -4,17 +4,20 @@
 	"private": true,
 	"main": "src/index.jsx",
 	"devDependencies": {
+		"@testing-library/jest-dom": "^5.11.3",
+		"@types/jest": "^26.0.10",
 		"eslint-config-airbnb": "^18.2.0",
 		"eslint-config-prettier": "^6.11.0",
 		"eslint-plugin-prettier": "^3.1.4",
 		"prettier": "^2.0.5",
-		"react-scripts": "^3.4.1",
+		"react-scripts": "^3.4.3",
 		"react-test-renderer": "^16.13.1"
 	},
 	"dependencies": {
-		"@apollo/client": "^3.0.0-rc.9",
+		"@apollo/client": "^3.1.3",
+		"@testing-library/react": "^10.4.8",
 		"classnames": "^2.2.6",
-		"graphql": "^15.1.0",
+		"graphql": "^15.3.0",
 		"prop-types": "^15.7.2",
 		"react": "16.13.1",
 		"react-dom": "16.13.1",
@@ -24,7 +27,8 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"eject": "react-scripts eject",
-		"test": "react-scripts test --env=node"
+		"test": "react-scripts test --env=jsdom",
+		"test:coverage": "npm test --coverage"
 	},
 	"browserslist": [
 		">0.2%",

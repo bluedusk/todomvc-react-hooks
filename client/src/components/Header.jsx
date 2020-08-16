@@ -12,8 +12,6 @@ const ADD_TODO = gql`
 	}
 `;
 const Header = () => {
-	// const dispatch = useTodo()[1];
-
 	const [addTodoMutation] = useMutation(ADD_TODO);
 	return (
 		<header className="header">
