@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { gql, useMutation, useQuery } from "@apollo/client";
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, cloneElement } from "react";
 import { Footer } from "./Footer";
 import { TodoList } from "./TodoList";
 import { useVisibility } from "../hooks/useVisibility";
 
-const GET_ALL_TODOS = gql`
+export const GET_ALL_TODOS = gql`
 	query getAllTodos {
 		todos {
 			id
@@ -37,31 +37,32 @@ const MainSection = () => {
 	const { loading, error, data, startPolling, stopPolling } = useQuery(
 		GET_ALL_TODOS
 	);
+	console.log("%c zzzzz----------->", "color: red", loading, data);
 
 	useEffect(() => {
 		setVisibility("All");
 	}, [setVisibility]);
 
-	useEffect(() => {
-		window.addEventListener("load", () => {
-			console.log("Start Polling...");
-			startPolling(2000);
-		});
-		window.addEventListener("focus", () => {
-			console.log("Start Polling...");
-			startPolling(2000);
-		});
-		window.addEventListener("blur", () => {
-			console.log("Stop Polling...");
-			stopPolling();
-		});
+	// useEffect(() => {
+	// 	// window.addEventListener("load", () => {
+	// 	// 	console.log("Start Polling...");
+	// 	// 	startPolling(2000);
+	// 	// });
+	// 	// window.addEventListener("focus", () => {
+	// 	// 	console.log("Start Polling...");
+	// 	// 	startPolling(2000);
+	// 	// });
+	// 	// window.addEventListener("blur", () => {
+	// 	// 	console.log("Stop Polling...");
+	// 	// 	stopPolling();
+	// 	// });
 
-		return () => {
-			window.removeEventListener("load", undefined);
-			window.removeEventListener("focus", undefined);
-			window.removeEventListener("blur", undefined);
-		};
-	}, [startPolling, stopPolling]);
+	// 	return () => {
+	// 		window.removeEventListener("load", undefined);
+	// 		window.removeEventListener("focus", undefined);
+	// 		window.removeEventListener("blur", undefined);
+	// 	};
+	// }, [startPolling, stopPolling]);
 
 	if (loading) {
 		return null;

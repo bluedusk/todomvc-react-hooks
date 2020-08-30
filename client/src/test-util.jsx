@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 // this adds custom jest matchers from jest-dom
 import { MockedProvider } from "@apollo/client/testing";
-
+import "@testing-library/jest-dom/extend-expect";
 // type RenderApolloOptions = {
 // 	mocks?: MockedResponse[];
 // 	addTypename?: any;
@@ -31,3 +31,4 @@ const renderApollo = (
 };
 
 export { renderApollo };
+export * from "@testing-library/react";

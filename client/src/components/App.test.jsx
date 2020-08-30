@@ -1,18 +1,24 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { MockedProvider } from "@apollo/client/testing";
+import { renderApollo } from "../test-util";
 import Header from "./Header";
 import MainSection from "./MainSection";
-import "@testing-library/jest-dom/extend-expect";
 
-test("should render", () => {
-	const { debug, getByText } = render(
-		<MockedProvider addTypename={false}>
-			<div>
-				<Header />
-				<MainSection />
-			</div>
-		</MockedProvider>
+jest.mock("./MainSection", () => {
+	return {
+		__esModule: true,
+		default: () => {
+			return <div>Mocked MainSection</div>;
+		},
+	};
+});
+
+test("should render", async () => {
+	const { debug, getByText } = renderApollo(
+		<>
+			<Header />
+			<MainSection />
+		</>,
+		{}
 	);
 	expect(getByText(/todos/)).toBeInTheDocument();
 	debug();

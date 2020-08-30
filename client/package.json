@@ -4,7 +4,8 @@
 	"private": true,
 	"main": "src/index.jsx",
 	"devDependencies": {
-		"@testing-library/jest-dom": "^5.11.3",
+		"@testing-library/jest-dom": "^5.11.4",
+		"@testing-library/user-event": "^12.1.2",
 		"@types/jest": "^26.0.10",
 		"eslint-config-airbnb": "^18.2.0",
 		"eslint-config-prettier": "^6.11.0",
@@ -15,7 +16,7 @@
 	},
 	"dependencies": {
 		"@apollo/client": "^3.1.3",
-		"@testing-library/react": "^10.4.8",
+		"@testing-library/react": "^10.4.9",
 		"classnames": "^2.2.6",
 		"graphql": "^15.3.0",
 		"prop-types": "^15.7.2",
